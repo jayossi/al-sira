@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
+import Providers from '@/components/Providers'
+import { Toaster } from 'react-hot-toast'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -11,12 +13,15 @@ export const metadata: Metadata = {
 }
 // the syntax f({x}): {x: string} is called a type annotation. just like haskell. x must have type string
 // in our case, the function RootLayout takes an object with a key children, which is a ReactNode
-export default function RootLayout({children,}: { children: React.ReactNode}) {
+export default function RootLayout({ children, }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={inter.className}>{children}</body>
-      </html>
+      <Providers>
+        <html lang="en">
+          <body className={inter.className}>{children}</body>
+          <Toaster />
+        </html>
+      </Providers>
     </ClerkProvider>
 
   )
