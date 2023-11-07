@@ -1,41 +1,52 @@
-import { PutObjectCommandOutput, S3 } from '@aws-sdk/client-s3';
+import { PutObjectCommand, S3Client, PutObjectCommandOutput } from "@aws-sdk/client-s3";
+
 
 export async function uploadToS3(file: File): Promise<{ file_key: string, file_name: string }> {
-    return new Promise((resolve, reject) => {
+
+
+    return new Promise(async (resolve, reject) => {
+
         try {
-            const s3 = new S3({
-                region: process.env.AWS_S3_REGION,
+            const accessKey_Id = process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID;
+            const secretAccess_Key = process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY;
+            const bucket_name = process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME;
+            const aws_region = process.env.NEXT_PUBLIC_AWS_S3_REGION;
+
+            const s3 = new S3Client({
+                region: aws_region,
                 credentials: {
-                    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-                    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+                    accessKeyId: accessKey_Id!,
+                    secretAccessKey: secretAccess_Key!,
                 },
             });
-            const file_key = "uploads/" + Date.now() + file.name.replace(' ', '-');
 
+            const file_key = "uploads/" + Date.now().toString() + file.name.replace(' ', '-');
+            console.log(
+                "Bucket name: " + bucket_name +
+                "accessKey_Id: " + accessKey_Id +
+                "secretAccess_Key: " + secretAccess_Key +
+                "region: " + aws_region +
+                "File key: " + file_key +
+                "File name: " + file.name +
+                "File type: " + file.type)
             const input = {
-                Bucket: process.env.AWS_S3_BUCKET_NAME!,
+                Bucket: bucket_name,
                 Key: file_key,
                 Body: file,
             };
-            s3.putObject(input,
-                (err: any, data: PutObjectCommandOutput | undefined) => {
-                    return resolve({
-                        file_key,
-                        file_name: file.name,
-                    });
-                }
-            );
-
+            const command = new PutObjectCommand(input);
+            return resolve({
+                file_key,
+                file_name: file.name,
+            });
         } catch (error) {
             reject(error);
         }
-
     });
-
 }
 
 // returns the publicly available url so that we can embed it to our pdf screen later.
 export function getS3Url(file_key: string) {
-    const url = `https:://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_S3_REGION}.amazonaws.com/${file_key}`;
+    const url = `https:://${process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_S3_REGION}.amazonaws.com/${file_key}`;
     return url;
 }
