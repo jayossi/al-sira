@@ -19,14 +19,7 @@ export async function uploadToS3(file: File): Promise<{ file_key: string, file_n
             });
 
             const file_key = "uploads/" + Date.now().toString() + file.name.replace(' ', '-');
-            console.log(
-                "Bucket name: " + bucket_name +
-                "accessKey_Id: " + accessKey_Id +
-                "secretAccess_Key: " + secretAccess_Key +
-                "region: " + aws_region +
-                "File key: " + file_key +
-                "File name: " + file.name +
-                "File type: " + file.type)
+
             const input = {
                 Bucket: bucket_name,
                 Key: file_key,
