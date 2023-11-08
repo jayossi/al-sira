@@ -1,13 +1,14 @@
 import { S3 } from "@aws-sdk/client-s3"
 import fs from 'fs'
-export async function DownloadFromS3(file_Key: string): Promise<string> {
-    const accessKey_Id = process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID;
-    const secretAccess_Key = process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY;
-    const bucket_name = process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME;
-    const aws_region = process.env.NEXT_PUBLIC_AWS_S3_REGION;
 
+export async function DownloadFromS3(file_Key: string): Promise<string> {
     return new Promise(async (resolve, reject) => {
         try {
+            const accessKey_Id = process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID;
+            const secretAccess_Key = process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY;
+            const bucket_name = process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME;
+            const aws_region = process.env.NEXT_PUBLIC_AWS_S3_REGION;
+
             const s3 = new S3({
                 region: aws_region,
                 credentials: {

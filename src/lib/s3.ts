@@ -1,9 +1,7 @@
-import { PutObjectCommand, S3Client, PutObjectCommandOutput } from "@aws-sdk/client-s3";
+import { S3, PutObjectCommandOutput } from "@aws-sdk/client-s3";
 
 
 export async function uploadToS3(file: File): Promise<{ file_key: string, file_name: string }> {
-
-
     return new Promise(async (resolve, reject) => {
 
         try {
@@ -12,7 +10,7 @@ export async function uploadToS3(file: File): Promise<{ file_key: string, file_n
             const bucket_name = process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME;
             const aws_region = process.env.NEXT_PUBLIC_AWS_S3_REGION;
 
-            const s3 = new S3Client({
+            const s3 = new S3({
                 region: aws_region,
                 credentials: {
                     accessKeyId: accessKey_Id!,
@@ -34,11 +32,15 @@ export async function uploadToS3(file: File): Promise<{ file_key: string, file_n
                 Key: file_key,
                 Body: file,
             };
-            const command = new PutObjectCommand(input);
-            return resolve({
-                file_key,
-                file_name: file.name,
-            });
+            s3.putObject(
+                input,
+                (err: any, data: PutObjectCommandOutput | undefined) => {
+                    return resolve({
+                        file_key,
+                        file_name: file.name,
+                    });
+                }
+            );
         } catch (error) {
             reject(error);
         }
