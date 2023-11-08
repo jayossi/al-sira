@@ -35,7 +35,7 @@ export async function loadS3IntoPinecone(fileKey: string) {
   const pdfResumes = (await loader.load()) as PDFResume[];
   // 2. Prepare the document for pinecone
   const documents = await Promise.all(pdfResumes.map(prepareDocument));
-  console.log("documents: ", documents)
+  console.log("documents: ", documents);
   //3. vectorise and embed individual documents
   const vectors = await Promise.all(documents.flat().map(embedDocument));
 
