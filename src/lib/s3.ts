@@ -43,6 +43,6 @@ export async function uploadToS3(
 
 // returns the publicly available url so that we can embed it to our pdf screen later.
 export function getS3Url(file_key: string) {
-  const url = `https:://${process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_S3_REGION}.amazonaws.com/${file_key}`;
+  const url = `https://${process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME}.s3.${process.env.NEXT_PUBLIC_AWS_S3_REGION}.amazonaws.com/${file_key}`;
   return url;
 }

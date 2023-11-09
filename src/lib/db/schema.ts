@@ -22,6 +22,8 @@ export const resumes = pgTable("resumes", {
   userId: varchar("user_id", { length: 255 }).notNull(),
   fileKey: text("file_key").notNull(), //for retrieving the file from S3
 });
+
+export type DrizzleResume= typeof resumes.$inferSelect;
 //each Bulletpoint will be stored in the database
 export const bulletpoints = pgTable("bulletpoints", {
   id: serial("id").primaryKey(),
