@@ -40,10 +40,10 @@ const ResumeSideBar = ({ resumes, resumeId }: Props) => {
       </div>
 
       <div className="absolute bottom-4 left-4 ">
-        <div className="flex items-center text-sm gap-2 text-slate-500 flex-wrap">  
-            <Link href="/"> Home </Link>
-            <Link href="/"> Source</Link>
-            {/* Stripe Button */}
+        <div className="flex items-center text-sm gap-2 text-slate-500 flex-wrap">
+          <Link href="/"> Home </Link>
+          <Link href="/"> Source</Link>
+          {/* Stripe Button */}
         </div>
       </div>
     </div>
