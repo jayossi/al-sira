@@ -50,7 +50,7 @@ const ResumePage = async ({ params: { resumeId } }: Props) => {
         </div>
         {/* resume editor*/}
         <div className="flex-[3] border-l-4 border-l-slate-200">
-          <PointsGenerator />
+          <PointsGenerator resumeId={parseInt(resumeId)}/>
         </div>
       </div>
     </div>
