@@ -1,5 +1,6 @@
 import { Pinecone } from "@pinecone-database/pinecone";
 import { getEmbeddings } from "./embeddings";
+import { convertToAscii } from "./utils";
 
 export async function getMatchesFromEmbeddings(
   embedding: number[],
@@ -25,7 +26,8 @@ export async function getMatchesFromEmbeddings(
 }
 
 export async function getContext(query: string, filekey: string) {
-  const queryEmbedded = await getEmbeddings(query);
+  const namespace = convertToAscii(filekey);
+  const queryEmbedded = await getEmbeddings(query + "namespace: " + namespace);
   const matches = await getMatchesFromEmbeddings(queryEmbedded, filekey);
   console.log("matches: ", matches)
   const qualifyingdocs = matches.filter(

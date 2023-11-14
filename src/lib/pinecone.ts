@@ -38,7 +38,9 @@ export async function loadS3IntoPinecone(fileKey: string) {
   const documents = await Promise.all(pdfResumes.map(prepareDocument));
   console.log("documents: ", documents);
   //3. vectorise and embed individual documents
-  const vectors = await Promise.all(documents.flat().map(embedDocument));
+  const vectors = await Promise.all(
+    documents.flat().map((doc) => embedDocument(doc, fileKey))
+  );
   console.log("embedded vectors: ", vectors);
   // 4. Upload to pinecone
   const client = getPineconeClient();
@@ -51,9 +53,12 @@ export async function loadS3IntoPinecone(fileKey: string) {
   return documents[0];
 }
 
-async function embedDocument(doc: Document) {
+async function embedDocument(doc: Document, filekey: string) {
   try {
-    const embeddings = await getEmbeddings(doc.pageContent);
+    const namespace = convertToAscii(filekey);
+    const embeddings = await getEmbeddings(
+      doc.pageContent + "namespace: " + namespace
+    );
     console.log("embeddings: ", embeddings);
     const hash = md5(doc.pageContent);
 
@@ -87,6 +92,7 @@ async function prepareDocument(page: PDFResume) {
   pageContent = pageContent.replace(/\n/g, ""); //replace newlines with spaces
   const splitter = new RecursiveCharacterTextSplitter();
   const docs = await splitter.splitDocuments([
+    //this is the input document that we want to split
     new Document({
       pageContent,
       metadata: {
