@@ -33,12 +33,13 @@ export async function loadS3IntoPinecone(fileKey: string) {
   console.log("loading pdf into memory: " + file_name);
   const loader = new PDFLoader(file_name);
   const pdfResumes = (await loader.load()) as PDFResume[];
+  console.log("pdfResumes: ", pdfResumes);
   // 2. Prepare the document for pinecone
   const documents = await Promise.all(pdfResumes.map(prepareDocument));
   console.log("documents: ", documents);
   //3. vectorise and embed individual documents
   const vectors = await Promise.all(documents.flat().map(embedDocument));
-
+  console.log("embedded vectors: ", vectors);
   // 4. Upload to pinecone
   const client = getPineconeClient();
   console.log("uploading to pinecone");
@@ -46,7 +47,7 @@ export async function loadS3IntoPinecone(fileKey: string) {
 
   console.log("inserting vectors into pinecone");
   await pineconeIndex.upsert(vectors);
-
+  console.log("finished inserting vectors into pinecone");
   return documents[0];
 }
 
@@ -75,18 +76,22 @@ export const truncateStringByByte = (str: string, bytes: number) => {
   return new TextDecoder("utf-8").decode(enc.encode(str).slice(0, bytes));
 };
 
+//INPUT: PDFResume which is a string of the page content and the page number
+//destruct the PDFResume into pageContent and metadata
+//replace newlines with spaces
+//create a new Document with the pageContent and metadata
+//split the document into a Document[] using RecursiveCharacterTextSplitter
+// return a list of documents
 async function prepareDocument(page: PDFResume) {
   let { pageContent, metadata } = page;
-  pageContent = pageContent.replace(/\n/g, " "); //replace newlines with spaces
+  pageContent = pageContent.replace(/\n/g, ""); //replace newlines with spaces
   const splitter = new RecursiveCharacterTextSplitter();
   const docs = await splitter.splitDocuments([
     new Document({
       pageContent,
       metadata: {
-        loc: {
-          pageNumber: metadata.loc.pageNumber,
-          text: truncateStringByByte(pageContent, 36000),
-        },
+        pageNumber: metadata.loc.pageNumber,
+        text: truncateStringByByte(pageContent, 36000),
       },
     }),
   ]);

@@ -16,6 +16,7 @@ export async function getMatchesFromEmbeddings(
       topK: 5,
       includeMetadata: true,
     });
+    console.log("queryResult: ", queryResult)
     return queryResult.matches || [];
   } catch (error) {
     console.log("error getting matches from embeddings: ", error);
@@ -26,14 +27,17 @@ export async function getMatchesFromEmbeddings(
 export async function getContext(query: string, filekey: string) {
   const queryEmbedded = await getEmbeddings(query);
   const matches = await getMatchesFromEmbeddings(queryEmbedded, filekey);
+  console.log("matches: ", matches)
   const qualifyingdocs = matches.filter(
     (match) => match.score && match.score > 0.7
   );
+  console.log("qualifyingdocs: ", qualifyingdocs)
   type Metadata = {
     text: string;
     pageNumber: number;
   };
 
   let docs = qualifyingdocs.map((doc) => (doc.metadata as Metadata).text);
+  console.log("docs: ", docs)
   return docs.join("\n").substring(0, 3000);
 }

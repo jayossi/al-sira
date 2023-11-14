@@ -23,7 +23,7 @@ export const resumes = pgTable("resumes", {
   fileKey: text("file_key").notNull(), //for retrieving the file from S3
 });
 
-export type DrizzleResume= typeof resumes.$inferSelect;
+export type DrizzleResume = typeof resumes.$inferSelect;
 //each Bulletpoint will be stored in the database
 export const bulletpoints = pgTable("bulletpoints", {
   id: serial("id").primaryKey(),
@@ -33,4 +33,17 @@ export const bulletpoints = pgTable("bulletpoints", {
   content: text("content").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   role: userSystemEnum("role").notNull(),
+});
+
+export const userSubscription = pgTable("user_subscription", {
+  id: serial("id").primaryKey(),
+  userid: varchar("user_id", { length: 255 }).notNull().unique(),
+  stripeCustomerId: varchar("stripe_customer_id", { length: 255 })
+    .notNull()
+    .unique(),
+  stripeSubscriptionId: varchar("stripe_subscription_id", {
+    length: 255,
+  }).unique(),
+  stripePriceId: varchar("stripe_price_id", { length: 255 }),
+  stripeCurrentPeriodEnd: timestamp("stripe_current_period_end"),
 });
