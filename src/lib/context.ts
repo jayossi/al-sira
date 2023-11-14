@@ -27,7 +27,7 @@ export async function getMatchesFromEmbeddings(
 
 export async function getContext(query: string, filekey: string) {
   const namespace = convertToAscii(filekey);
-  const queryEmbedded = await getEmbeddings(query + "namespace: " + namespace);
+  const queryEmbedded = await getEmbeddings(query + " namespace: " + namespace);
   const matches = await getMatchesFromEmbeddings(queryEmbedded, filekey);
   console.log("matches: ", matches)
   const qualifyingdocs = matches.filter(

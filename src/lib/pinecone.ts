@@ -57,7 +57,7 @@ async function embedDocument(doc: Document, filekey: string) {
   try {
     const namespace = convertToAscii(filekey);
     const embeddings = await getEmbeddings(
-      doc.pageContent + "namespace: " + namespace
+      doc.pageContent + " namespace: " + namespace
     );
     console.log("embeddings: ", embeddings);
     const hash = md5(doc.pageContent);
