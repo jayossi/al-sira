@@ -34,3 +34,65 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+```
+al-sira
+├─ .eslintrc.json
+├─ .gitignore
+├─ README.md
+├─ components.json
+├─ drizzle.config.ts
+├─ next.config.js
+├─ package-lock.json
+├─ package.json
+├─ postcss.config.js
+├─ public
+│  ├─ next.svg
+│  └─ vercel.svg
+├─ src
+│  ├─ app
+│  │  ├─ api
+│  │  │  ├─ chat
+│  │  │  │  └─ route.ts
+│  │  │  └─ create-resume
+│  │  │     └─ route.ts
+│  │  ├─ favicon.ico
+│  │  ├─ globals.css
+│  │  ├─ layout.tsx
+│  │  ├─ page.tsx
+│  │  ├─ resume
+│  │  │  └─ [resumeId]
+│  │  │     └─ page.tsx
+│  │  ├─ sign-in
+│  │  │  └─ [[...sign-in]]
+│  │  │     └─ page.tsx
+│  │  └─ sign-up
+│  │     └─ [[...sign-up]]
+│  │        └─ page.tsx
+│  ├─ components
+│  │  ├─ BulletpointsList.tsx
+│  │  ├─ FileUpload.tsx
+│  │  ├─ PDFEditor.tsx
+│  │  ├─ PDFViewer.tsx
+│  │  ├─ PointsGenerator.tsx
+│  │  ├─ Providers.tsx
+│  │  ├─ ResumeSideBar.tsx
+│  │  ├─ editor
+│  │  └─ ui
+│  │     ├─ button.tsx
+│  │     └─ input.tsx
+│  ├─ lib
+│  │  ├─ context.ts
+│  │  ├─ db
+│  │  │  ├─ index.ts
+│  │  │  └─ schema.ts
+│  │  ├─ embeddings.ts
+│  │  ├─ pinecone.ts
+│  │  ├─ s3-server.ts
+│  │  ├─ s3.ts
+│  │  └─ utils.ts
+│  └─ middleware.ts
+├─ tailwind.config.ts
+└─ tsconfig.json
+
+```
