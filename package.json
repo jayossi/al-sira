@@ -38,6 +38,7 @@
     "react-dropzone": "^14.2.3",
     "react-hot-toast": "^2.4.1",
     "slate": "^0.100.0",
+    "slate-history": "^0.100.0",
     "slate-react": "^0.101.0",
     "stripe": "^14.4.0",
     "tailwind-merge": "^2.0.0",
