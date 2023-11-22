@@ -15,6 +15,7 @@ import {
   SubSubHeadingElement,
 } from "./Elements";
 import { ToolBar, toolbarIcons, onKeyDown, CEditor } from "./utils";
+import { withHistory } from "slate-history";
 
 declare module "slate" {
   interface CustomTypes {
@@ -29,11 +30,12 @@ const initialValue: Descendant[] = [
   {
     type: "paragraph",
     children: [{ text: "A line of text in a paragraph." }],
+    align: "left",
   },
 ];
 
 const RichTextEditor = () => {
-  const [editor] = useState(() => withReact(createEditor()));
+  const [editor] = useState(() => withReact(withHistory(createEditor())));
 
   const renderElement = useCallback((props: any) => {
     switch (props.element.type) {

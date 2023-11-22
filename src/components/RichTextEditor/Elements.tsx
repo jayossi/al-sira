@@ -1,8 +1,11 @@
 import React from "react";
 
+//CHANGES Align
+const alignment = "left";
+
 export const HeadingElement = (props: any) => {
   return (
-    <h1 {...props.attributes} fontWeight="bolder">
+    <h1 style={{textAlign: alignment}}{...props.attributes} fontWeight="bolder">
       {props.children}
     </h1>
   );
@@ -10,14 +13,14 @@ export const HeadingElement = (props: any) => {
 
 export const SubHeadingElement = (props: any) => {
   return (
-    <h2 {...props.attributes} fontWeight="bolder">
+    <h2 style={{textAlign: alignment}}{...props.attributes} fontWeight="bolder">
       {props.children}
     </h2>
   );
 };
 export const SubSubHeadingElement = (props: any) => {
   return (
-    <h3 {...props.attributes} fontWeight="bold">
+    <h3 style={{textAlign: alignment}}{...props.attributes} fontWeight="bold">
       {props.children}
     </h3>
   );
@@ -25,7 +28,7 @@ export const SubSubHeadingElement = (props: any) => {
 
 export const ListElement = (props: any) => {
   return (
-    <ul {...props.attributes}>
+    <ul style={{textAlign: alignment}}{...props.attributes}>
       <li>{props.children}</li>
     </ul>
   );
@@ -40,7 +43,7 @@ export const CodeElement = (props: any) => {
 };
 
 export const DefaultElement = (props: any) => {
-  return <p {...props.attributes}>{props.children}</p>;
+  return <p style={{textAlign: alignment}} {...props.attributes}>{props.children}</p>;
 };
 
 // Define a React component to render leaves with bold text.
