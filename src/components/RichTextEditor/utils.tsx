@@ -1,5 +1,5 @@
 import { Flex, Divider } from "@aws-amplify/ui-react";
-import { Editor, Transforms, Element } from "slate";
+import { Editor, Transforms, Element as SlateElement, Node } from "slate";
 import { IconButton } from "@mui/material";
 import {
   FormatBold,
@@ -14,7 +14,13 @@ import {
   Undo,
   Redo,
 } from "@mui/icons-material";
-import { CustomEditor, HeadingElement, TEXT_ALIGN_TYPES } from "./types";
+import {
+  CustomEditor,
+  HeadingElement,
+  ParagraphElement,
+  TEXT_ALIGN_TYPES,
+  TitleElement,
+} from "./types";
 
 export function ToolBar(props: any) {
   return (
@@ -79,31 +85,31 @@ export const CEditor = {
   },
   isCodeBlockActive(editor: any) {
     const [match] = Editor.nodes(editor, {
-      match: (n) => Element.isElement(n) && n.type === "code",
+      match: (n) => SlateElement.isElement(n) && n.type === "code",
     });
     return !!match;
   },
   isListActive(editor: any) {
     const [match] = Editor.nodes(editor, {
-      match: (n) => Element.isElement(n) && n.type === "list",
+      match: (n) => SlateElement.isElement(n) && n.type === "list",
     });
     return !!match;
   },
   isH1BlockActive(editor: any) {
     const [match] = Editor.nodes(editor, {
-      match: (n) => Element.isElement(n) && n.type === "heading",
+      match: (n) => SlateElement.isElement(n) && n.type === "heading",
     });
     return !!match;
   },
   isH2BlockActive(editor: any) {
     const [match] = Editor.nodes(editor, {
-      match: (n) => Element.isElement(n) && n.type === "subheading",
+      match: (n) => SlateElement.isElement(n) && n.type === "subheading",
     });
     return !!match;
   },
   getCurrentHeadingType(editor: any) {
     const [match] = Editor.nodes(editor, {
-      match: (n) => Element.isElement(n) && n.type === "list",
+      match: (n) => SlateElement.isElement(n) && n.type === "list",
     });
     return !!match;
   },
@@ -136,7 +142,7 @@ export const CEditor = {
     Transforms.setNodes(
       editor,
       { type: isActive ? undefined : "code" },
-      { match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) }
+      { match: (n) => SlateElement.isElement(n) && Editor.isBlock(editor, n) }
     );
   },
   toggleList(editor: any) {
@@ -145,15 +151,15 @@ export const CEditor = {
     Transforms.setNodes(
       editor,
       { type: isActive ? undefined : "list" },
-      { match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) }
+      { match: (n) => SlateElement.isElement(n) && Editor.isBlock(editor, n) }
     );
   },
   toggleH1Block(editor: any) {
     const isActive = CEditor.isH1BlockActive(editor);
     Transforms.setNodes(
       editor,
-      { type: isActive ? undefined : "heading", level: 1 },
-      { match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) }
+      { type: isActive ? undefined : "heading" },
+      { match: (n) => SlateElement.isElement(n) && Editor.isBlock(editor, n) }
     );
   },
   toggleH2Block(editor: any) {
@@ -163,19 +169,19 @@ export const CEditor = {
       {
         type: isActive ? undefined : "subheading",
       },
-      { match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) }
+      { match: (n) => SlateElement.isElement(n) && Editor.isBlock(editor, n) }
     );
   },
   alignToSide(editor: any, side: string = "right") {
     if (!TEXT_ALIGN_TYPES.includes(side)) {
       return;
     }
-    let newproperties: Partial<Element>;
+    let newproperties: Partial<SlateElement>;
     newproperties = {
       align: side,
     };
-    Transforms.setNodes<Element>(editor, newproperties, {
-      match: (n) => Element.isElement(n) && Editor.isBlock(editor, n),
+    Transforms.setNodes<SlateElement>(editor, newproperties, {
+      match: (n) => SlateElement.isElement(n) && Editor.isBlock(editor, n),
     });
   },
 };
@@ -250,7 +256,7 @@ export const toolbarIcons = (editor: CustomEditor) => {
       >
         <LooksTwo />
       </IconButton>
-      
     </>
   );
 };
+

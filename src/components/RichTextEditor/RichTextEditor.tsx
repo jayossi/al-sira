@@ -1,30 +1,14 @@
-// src/components/RichTextEditor/RichTextEditor.tsx
+"use client";
+
 import React, { useCallback, useState } from "react";
 import { createEditor } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
-import { CustomText, CustomNode, CustomElement, CustomEditor } from "./types";
 // TypeScript users only add this code
 import { Descendant } from "slate";
-import {
-  HeadingElement,
-  SubHeadingElement,
-  ListElement,
-  CodeElement,
-  Leaf,
-  DefaultElement,
-  SubSubHeadingElement,
-} from "./Elements";
+import { Leaf, Element } from "./Elements";
 import { ToolBar, toolbarIcons, onKeyDown, CEditor } from "./utils";
 import { withHistory } from "slate-history";
-
-declare module "slate" {
-  interface CustomTypes {
-    Editor: CustomEditor;
-    Element: CustomElement;
-    Text: CustomText;
-    Node: CustomNode;
-  }
-}
+import { initialResumeTemplate } from "./template";
 
 const initialValue: Descendant[] = [
   {
@@ -38,26 +22,13 @@ const RichTextEditor = () => {
   const [editor] = useState(() => withReact(withHistory(createEditor())));
 
   const renderElement = useCallback((props: any) => {
-    switch (props.element.type) {
-      case "code":
-        return <CodeElement {...props} />;
-      case "list":
-        return <ListElement {...props} />;
-      case "heading":
-        return <HeadingElement {...props} />;
-      case "subheading":
-        return <SubHeadingElement {...props} />;
-      case "subsubheading":
-        return <SubSubHeadingElement {...props} />;
-      default:
-        return <DefaultElement {...props} />;
-    }
+    return <Element {...props} />;
   }, []);
   const renderLeaf = useCallback((props: any) => {
     return <Leaf {...props} />;
   }, []);
   return (
-    <Slate editor={editor} initialValue={initialValue}>
+    <Slate editor={editor} initialValue={initialResumeTemplate}>
       <div>
         <ToolBar>{toolbarIcons(editor)}</ToolBar>
       </div>
@@ -71,3 +42,4 @@ const RichTextEditor = () => {
 };
 
 export default RichTextEditor;
+
