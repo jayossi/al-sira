@@ -5,8 +5,8 @@ import { FixedToolbar } from "@/components/plate-ui/fixed-toolbar";
 import { FixedToolbarButtons } from "@/components/plate-ui/fixed-toolbar-buttons";
 import { FloatingToolbar } from "@/components/plate-ui/floating-toolbar";
 import { FloatingToolbarButtons } from "@/components/plate-ui/floating-toolbar-buttons";
-import { Plate } from "@udecode/plate-common";
-
+import { Plate, PlateContent, Value } from "@udecode/plate-common";
+import { createPlateUI } from "@/lib/create-plate-ui";
 import {
   createPlugins,
   RenderAfterEditable,
@@ -94,6 +94,7 @@ import { ParagraphElement } from "@/components/plate-ui/paragraph-element";
 import { HighlightLeaf } from "@/components/plate-ui/highlight-leaf";
 import { KbdLeaf } from "@/components/plate-ui/kbd-leaf";
 import { withPlaceholders } from "@/components/plate-ui/placeholder";
+import { useState } from "react";
 
 const plugins = createPlugins(
   [
@@ -125,10 +126,7 @@ const plugins = createPlugins(
     createAlignPlugin({
       inject: {
         props: {
-          validTypes: [
-            ELEMENT_PARAGRAPH,
-            // ELEMENT_H1, ELEMENT_H2, ELEMENT_H3
-          ],
+          validTypes: [ELEMENT_PARAGRAPH, ELEMENT_H1, ELEMENT_H2, ELEMENT_H3],
         },
       },
     }),
@@ -231,21 +229,23 @@ const plugins = createPlugins(
     createDeserializeMdPlugin(),
     createJuicePlugin(),
   ],
-  
+  {
+    components: createPlateUI(),
+  }
 );
 
-const initialValue = [
-  {
-    id: "1",
-    type: "p",
-    children: [{ text: "Hello, World!" }],
-  },
-];
-
 function PlateEditor() {
+  const [debugValue, setDebugValue] = useState<Value>(initialResumeValue);
+
   return (
-    <
-    <Plate plugins={plugins} initialValue={initialValue}>
+    <Plate
+      plugins={plugins}
+      initialValue={initialResumeValue}
+      onChange={(newValue) => {
+        setDebugValue(newValue);
+        // save newValue...
+      }}
+    >
       <FixedToolbar>
         <FixedToolbarButtons />
       </FixedToolbar>
@@ -260,3 +260,348 @@ function PlateEditor() {
 }
 
 export default PlateEditor;
+
+export const basicEditorValue = [
+  {
+    type: "h1",
+    children: [
+      {
+        text: "🌳 Blocks",
+      },
+    ],
+    id: "1",
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "Easily create headings of various levels, from H1 to H6, to structure your content and make it more organized.",
+      },
+    ],
+    id: "2",
+  },
+  {
+    type: "blockquote",
+    children: [
+      {
+        text: "Create blockquotes to emphasize important information or highlight quotes from external sources.",
+      },
+    ],
+    id: "3",
+  },
+  {
+    type: "code_block",
+    lang: "javascript",
+    children: [
+      {
+        type: "code_line",
+        children: [
+          {
+            text: "// Use code blocks to showcase code snippets",
+          },
+        ],
+      },
+      {
+        type: "code_line",
+        children: [
+          {
+            text: "function greet() {",
+          },
+        ],
+      },
+      {
+        type: "code_line",
+        children: [
+          {
+            text: "  console.info('Hello World!');",
+          },
+        ],
+      },
+      {
+        type: "code_line",
+        children: [
+          {
+            text: "}",
+          },
+        ],
+      },
+    ],
+    id: "4",
+  },
+  {
+    type: "h1",
+    children: [
+      {
+        text: "🌱 Marks",
+      },
+    ],
+    id: "1",
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "Add style and emphasis to your text using the mark plugins, which offers a variety of formatting options.",
+      },
+    ],
+    id: "2",
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "Make text ",
+      },
+      {
+        text: "bold",
+        bold: true,
+      },
+      {
+        text: ", ",
+      },
+      {
+        text: "italic",
+        italic: true,
+      },
+      {
+        text: ", ",
+      },
+      {
+        text: "underlined",
+        underline: true,
+      },
+      {
+        text: ", or apply a ",
+      },
+      {
+        text: "combination",
+        bold: true,
+        italic: true,
+        underline: true,
+      },
+      {
+        text: " of these styles for a visually striking effect.",
+      },
+    ],
+    id: "3",
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "Add ",
+      },
+      {
+        text: "strikethrough",
+        strikethrough: true,
+      },
+      {
+        text: " to indicate deleted or outdated content.",
+      },
+    ],
+    id: "4",
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "Write code snippets with inline ",
+      },
+      {
+        text: "code",
+        code: true,
+      },
+      {
+        text: " formatting for easy readability.",
+      },
+    ],
+    id: "5",
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "Press ",
+      },
+      {
+        text: "⌘+B",
+        kbd: true,
+      },
+      {
+        text: " to apply bold mark or ",
+      },
+      {
+        text: "⌘+I",
+        kbd: true,
+      },
+      {
+        text: " for italic mark.",
+      },
+    ],
+    id: "6",
+  },
+];
+
+export const initialResumeValue = [
+  {
+    type: "h1",
+    children: [
+      {
+        text: "Firstname Lastname",
+      },
+    ],
+    id: "1",
+    align: "center",
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "City, Country | phone number | email | website link",
+      },
+    ],
+    id: "2",
+    align: "center",
+  },
+  {
+    type: "h2",
+    children: [
+      {
+        text: "Education",
+      },
+    ],
+    id: "3",
+    align: "left",
+  },
+  {
+    type: "hr",
+    children: [{ text: "" }],
+    id: "4",
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "University: The University of Life",
+      },
+    ],
+    id: "5",
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "Degree: Bachelor of Science in Life",
+      },
+    ],
+  },
+  {
+    type: "h2",
+    children: [
+      {
+        text: "Experience",
+      },
+    ],
+  },
+  {
+    type: "hr",
+    children: [{ text: "" }],
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "Company: Life Inc.",
+      },
+    ],
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "Role: Life Coach",
+      },
+    ],
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "  ",
+      },
+    ],
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "Company: Death Inc.",
+      },
+    ],
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "Role: Death Coach",
+      },
+    ],
+  },
+  {
+    type: "h2",
+    children: [
+      {
+        text: "Project Experience",
+      },
+    ],
+  },
+  {
+    type: "hr",
+    children: [{ text: "" }],
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "Organization: Life Inc.",
+      },
+    ],
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "Title: Founder",
+      },
+    ],
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "  ", height: "2px"
+      },
+    ],
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "Organization: Death Inc.",
+      },
+    ],
+  },
+  {
+    type: "p",
+    children: [
+      {
+        text: "Title: Reaper",
+      },
+    ],
+  },
+  {type: "h3", children: [{text: "Skills & Interests"}]},
+  {type: "hr", children: [{text: ""}]},
+  {type: "p", children: [{text: "Skill: Life Coaching"}]},
+  {type: "p", children: [{text: "Interests: Death Coaching", bold: true}]},
+
+];

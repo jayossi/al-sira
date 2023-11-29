@@ -11,6 +11,7 @@ import { eq } from "drizzle-orm";
 import ResumeSideBar from "@/components/ResumeSideBar";
 import PDFViewer from "@/components/PDFViewer";
 import PointsGenerator from "@/components/PointsGenerator";
+import PlateEditor from "@/components/PlateEditor/PlateEditor";
 
 type Props = {
   params: {
@@ -46,7 +47,8 @@ const ResumePage = async ({ params: { resumeId } }: Props) => {
         </div>
         {/* pdf viewer*/}
         <div className="max-h-screen p-4 overflow-scroll flex-[5]">
-          <PDFViewer resume_url={current_resume?.resumeUrl || ""} />
+          {/* <PDFViewer resume_url={current_resume?.resumeUrl || ""} /> */}
+          <PlateEditor/>
         </div>
         {/* resume editor*/}
         <div className="flex-[3] border-l-4 border-l-slate-200">
