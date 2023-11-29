@@ -494,6 +494,7 @@ export const initialResumeValue = [
         text: "Degree: Bachelor of Science in Life",
       },
     ],
+    id: "6",
   },
   {
     type: "h2",
@@ -502,6 +503,7 @@ export const initialResumeValue = [
         text: "Experience",
       },
     ],
+    id: "7",
   },
   {
     type: "hr",
@@ -514,6 +516,7 @@ export const initialResumeValue = [
         text: "Company: Life Inc.",
       },
     ],
+    id: "8",
   },
   {
     type: "p",
@@ -522,6 +525,15 @@ export const initialResumeValue = [
         text: "Role: Life Coach",
       },
     ],
+    id: "9",
+  },
+  {
+    type: "ul",
+    children: [
+      { type: "li", children: [{ text: "Item 1" }] },
+      { type: "li", children: [{ text: "Item 2" }] },
+    ],
+    id: "10",
   },
   {
     type: "p",
@@ -538,6 +550,7 @@ export const initialResumeValue = [
         text: "Company: Death Inc.",
       },
     ],
+    id: "11",
   },
   {
     type: "p",
@@ -546,6 +559,7 @@ export const initialResumeValue = [
         text: "Role: Death Coach",
       },
     ],
+    id: "12",
   },
   {
     type: "h2",
@@ -554,6 +568,7 @@ export const initialResumeValue = [
         text: "Project Experience",
       },
     ],
+    id: "13",
   },
   {
     type: "hr",
@@ -566,6 +581,7 @@ export const initialResumeValue = [
         text: "Organization: Life Inc.",
       },
     ],
+    id: "14",
   },
   {
     type: "p",
@@ -574,14 +590,17 @@ export const initialResumeValue = [
         text: "Title: Founder",
       },
     ],
+    id: "15",
   },
   {
     type: "p",
     children: [
       {
-        text: "  ", height: "2px"
+        text: "  ",
+        height: "2px",
       },
     ],
+    id: "16",
   },
   {
     type: "p",
@@ -590,6 +609,7 @@ export const initialResumeValue = [
         text: "Organization: Death Inc.",
       },
     ],
+    id: "17",
   },
   {
     type: "p",
@@ -598,10 +618,14 @@ export const initialResumeValue = [
         text: "Title: Reaper",
       },
     ],
+    id: "18",
   },
-  {type: "h3", children: [{text: "Skills & Interests"}]},
-  {type: "hr", children: [{text: ""}]},
-  {type: "p", children: [{text: "Skill: Life Coaching"}]},
-  {type: "p", children: [{text: "Interests: Death Coaching", bold: true}]},
-
+  { type: "h3", children: [{ text: "Skills & Interests" }], id: "19" },
+  { type: "hr", children: [{ text: "" }] },
+  { type: "p", children: [{ text: "Skill: Life Coaching" }], id: "20" },
+  {
+    type: "p",
+    children: [{ text: "Interests: Death Coaching", bold: true }],
+    id: "21",
+  },
 ];

@@ -41,9 +41,7 @@ export function FloatingToolbarButtons() {
           >
             <Icons.strikethrough />
           </MarkToolbarButton>
-          <MarkToolbarButton nodeType={MARK_CODE} tooltip="Code (⌘+E)">
-            <Icons.code />
-          </MarkToolbarButton>
+          
         </>
       )}
 

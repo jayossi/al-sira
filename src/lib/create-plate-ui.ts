@@ -1,18 +1,12 @@
 import {
   MARK_BOLD,
-  MARK_CODE,
   MARK_ITALIC,
   MARK_STRIKETHROUGH,
   MARK_SUBSCRIPT,
   MARK_SUPERSCRIPT,
   MARK_UNDERLINE,
 } from "@udecode/plate-basic-marks";
-import { ELEMENT_BLOCKQUOTE } from "@udecode/plate-block-quote";
-import {
-  ELEMENT_CODE_BLOCK,
-  ELEMENT_CODE_LINE,
-  ELEMENT_CODE_SYNTAX,
-} from "@udecode/plate-code-block";
+
 import {
   PlateElement,
   PlateLeaf,
@@ -34,17 +28,10 @@ import { ELEMENT_LINK } from "@udecode/plate-link";
 import {
   ELEMENT_LI,
   ELEMENT_OL,
-  ELEMENT_TODO_LI,
   ELEMENT_UL,
 } from "@udecode/plate-list";
-import { ELEMENT_IMAGE, ELEMENT_MEDIA_EMBED } from "@udecode/plate-media";
 import { ELEMENT_PARAGRAPH } from "@udecode/plate-paragraph";
-import {
-  ELEMENT_TABLE,
-  ELEMENT_TD,
-  ELEMENT_TH,
-  ELEMENT_TR,
-} from "@udecode/plate-table";
+
 
 import { HeadingElement } from "@/components/plate-ui/heading-element";
 import { HighlightLeaf } from "@/components/plate-ui/highlight-leaf";
