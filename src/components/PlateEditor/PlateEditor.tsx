@@ -1,4 +1,5 @@
 "use client";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import { Editor } from "@/components/plate-ui/editor";
 import { FixedToolbar } from "@/components/plate-ui/fixed-toolbar";
@@ -95,6 +96,9 @@ import { HighlightLeaf } from "@/components/plate-ui/highlight-leaf";
 import { KbdLeaf } from "@/components/plate-ui/kbd-leaf";
 import { withPlaceholders } from "@/components/plate-ui/placeholder";
 import { useState } from "react";
+import { withDraggable } from "../plate-ui/with-draggables";
+import { Draggable } from "../plate-ui/draggable";
+import { DndProvider } from "react-dnd";
 
 const plugins = createPlugins(
   [
@@ -230,7 +234,7 @@ const plugins = createPlugins(
     createJuicePlugin(),
   ],
   {
-    components: createPlateUI(),
+    components: createPlateUI({}, { draggable: true }),
   }
 );
 
@@ -238,24 +242,26 @@ function PlateEditor() {
   const [debugValue, setDebugValue] = useState<Value>(initialResumeValue);
 
   return (
-    <Plate
-      plugins={plugins}
-      initialValue={initialResumeValue}
-      onChange={(newValue) => {
-        setDebugValue(newValue);
-        // save newValue...
-      }}
-    >
-      <FixedToolbar>
-        <FixedToolbarButtons />
-      </FixedToolbar>
+    <DndProvider backend={HTML5Backend}>
+        <Plate
+          plugins={plugins}
+          initialValue={initialResumeValue}
+          onChange={(newValue) => {
+            setDebugValue(newValue);
+            // save newValue...
+          }}
+        >
+          <FixedToolbar>
+            <FixedToolbarButtons />
+          </FixedToolbar>
 
-      <Editor />
+          <Editor />
 
-      <FloatingToolbar>
-        <FloatingToolbarButtons />
-      </FloatingToolbar>
-    </Plate>
+          <FloatingToolbar>
+            <FloatingToolbarButtons />
+          </FloatingToolbar>
+        </Plate>
+    </DndProvider>
   );
 }
 
