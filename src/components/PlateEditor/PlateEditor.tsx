@@ -6,7 +6,12 @@ import { FixedToolbar } from "@/components/plate-ui/fixed-toolbar";
 import { FixedToolbarButtons } from "@/components/plate-ui/fixed-toolbar-buttons";
 import { FloatingToolbar } from "@/components/plate-ui/floating-toolbar";
 import { FloatingToolbarButtons } from "@/components/plate-ui/floating-toolbar-buttons";
-import { Plate, PlateContent, Value } from "@udecode/plate-common";
+import {
+  Plate,
+  PlateContent,
+  Value,
+  createPlateEditor,
+} from "@udecode/plate-common";
 import { createPlateUI } from "@/lib/create-plate-ui";
 import {
   createPlugins,
@@ -95,10 +100,15 @@ import { ParagraphElement } from "@/components/plate-ui/paragraph-element";
 import { HighlightLeaf } from "@/components/plate-ui/highlight-leaf";
 import { KbdLeaf } from "@/components/plate-ui/kbd-leaf";
 import { withPlaceholders } from "@/components/plate-ui/placeholder";
-import { useState } from "react";
+import { SetStateAction, useCallback, useEffect, useState } from "react";
 import { withDraggable } from "../plate-ui/with-draggables";
 import { Draggable } from "../plate-ui/draggable";
 import { DndProvider } from "react-dnd";
+
+import { BlockType, LeafType, serialize } from "remark-slate";
+import { plateNodeTypes } from "./remarkslate-nodetypes";
+import { serializeHtml } from "@udecode/plate-serializer-html";
+import { serial } from "drizzle-orm/mysql-core";
 
 const plugins = createPlugins(
   [
@@ -239,34 +249,56 @@ const plugins = createPlugins(
 );
 
 function PlateEditor() {
-  const [debugValue, setDebugValue] = useState<Value>(initialResumeValue);
+  const [value, setValue] = useState<Value>(initialResumeValue);
+  const [html, setHtml] = useState<string>("");
+
+
+  useEffect(() => {
+    const editor = createPlateEditor({ plugins });
+
+    const updateHtml = () => {
+      const serializedHtml = serializeHtml(editor, { nodes: value });
+      setHtml(serializedHtml);
+      console.log(serializedHtml);
+    };
+
+    updateHtml(); // Initial HTML serialization
+
+    const onChange = (newValue:any) => {
+      setValue(newValue);
+    };
+
+    const subscription = editor.onChange(onChange);
+
+    return () => {
+      subscription();
+    };
+  }, [value]);
+
+
 
   return (
     <DndProvider backend={HTML5Backend}>
-        <Plate
-          plugins={plugins}
-          initialValue={initialResumeValue}
-          onChange={(newValue) => {
-            setDebugValue(newValue);
-            // save newValue...
-          }}
-        >
-          <FixedToolbar>
-            <FixedToolbarButtons />
-          </FixedToolbar>
+      <Plate
+        plugins={plugins}
+        initialValue={initialResumeValue}
+        onChange={handleChange}
+      >
+        <FixedToolbar>
+          <FixedToolbarButtons />
+        </FixedToolbar>
 
-          <Editor />
+        <Editor />
 
-          <FloatingToolbar>
-            <FloatingToolbarButtons />
-          </FloatingToolbar>
-        </Plate>
+        <FloatingToolbar>
+          <FloatingToolbarButtons />
+        </FloatingToolbar>
+      </Plate>
     </DndProvider>
   );
 }
 
 export default PlateEditor;
-
 
 export const initialResumeValue = [
   {
