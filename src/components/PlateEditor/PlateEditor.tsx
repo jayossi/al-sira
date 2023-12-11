@@ -253,28 +253,7 @@ function PlateEditor() {
   const [html, setHtml] = useState<string>("");
 
 
-  useEffect(() => {
-    const editor = createPlateEditor({ plugins });
-
-    const updateHtml = () => {
-      const serializedHtml = serializeHtml(editor, { nodes: value });
-      setHtml(serializedHtml);
-      console.log(serializedHtml);
-    };
-
-    updateHtml(); // Initial HTML serialization
-
-    const onChange = (newValue:any) => {
-      setValue(newValue);
-    };
-
-    const subscription = editor.onChange(onChange);
-
-    return () => {
-      subscription();
-    };
-  }, [value]);
-
+ 
 
 
   return (
@@ -282,7 +261,7 @@ function PlateEditor() {
       <Plate
         plugins={plugins}
         initialValue={initialResumeValue}
-        onChange={handleChange}
+        //onChange={}
       >
         <FixedToolbar>
           <FixedToolbarButtons />
