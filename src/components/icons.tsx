@@ -59,6 +59,7 @@ import {
   Underline,
   WrapText,
   X,
+  Download,
 } from 'lucide-react';
 
 import type { LucideIcon } from 'lucide-react';
@@ -140,6 +141,7 @@ const borderRight = (props: LucideProps) => (
   </svg>
 );
 
+
 const borderTop = (props: LucideProps) => (
   <svg
     viewBox="0 0 24 24"
@@ -218,7 +220,7 @@ export const Icons = {
   underline: Underline,
   unlink: Link2Off,
   viewing: Eye,
-
+  download: Download,
   // www
   gitHub: (props: LucideProps) => (
     <svg viewBox="0 0 438.549 438.549" {...props}>

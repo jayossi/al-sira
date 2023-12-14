@@ -29,6 +29,11 @@ import {
   useListToolbarButtonState,
 } from "@udecode/plate-list";
 
+function saveHTML() {
+  console.log("saveHTML");
+}
+
+
 export function FixedToolbarButtons() {
   const readOnly = useEditorReadOnly();
 
@@ -92,6 +97,11 @@ export function FixedToolbarButtons() {
 
         <ToolbarGroup noSeparator>
           <ModeDropdownMenu />
+        </ToolbarGroup>
+        <ToolbarGroup>
+          <ToolbarButton onClick={saveHTML} tooltip="Save file as HTML">
+            <Icons.download />
+          </ToolbarButton>
         </ToolbarGroup>
       </div>
     </div>
