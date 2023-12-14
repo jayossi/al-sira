@@ -1,5 +1,6 @@
 "use client";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { TooltipProvider } from "@/components/plate-ui/tooltip";
 
 import { Editor } from "@/components/plate-ui/editor";
 import { FixedToolbar } from "@/components/plate-ui/fixed-toolbar";
@@ -242,13 +243,14 @@ function PlateEditor() {
   const [debugValue, setDebugValue] = useState<Value>(initialResumeValue);
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <TooltipProvider>
+      <DndProvider backend={HTML5Backend}>
         <Plate
           plugins={plugins}
           initialValue={initialResumeValue}
           onChange={(newValue) => {
             setDebugValue(newValue);
-            // save newValue...
+            console.log(newValue);
           }}
         >
           <FixedToolbar>
@@ -261,7 +263,8 @@ function PlateEditor() {
             <FloatingToolbarButtons />
           </FloatingToolbar>
         </Plate>
-    </DndProvider>
+      </DndProvider>
+    </TooltipProvider>
   );
 }
 
