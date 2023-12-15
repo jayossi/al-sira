@@ -12,7 +12,11 @@ import {
   MARK_FONT_SIZE,
   MARK_FONT_FAMILY,
 } from "@udecode/plate-font";
-import { useEditorReadOnly } from "@udecode/plate-common";
+import {
+  PlateEditor,
+  useEditorReadOnly,
+  useEditorRef,
+} from "@udecode/plate-common";
 
 import { Icons, iconVariants } from "@/components/icons";
 
@@ -28,15 +32,32 @@ import {
   useListToolbarButton,
   useListToolbarButtonState,
 } from "@udecode/plate-list";
+import { elementToHtml, leafToHtml } from "@udecode/plate-serializer-html";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 
-function saveHTML() {
-  console.log("saveHTML");
+// const html = editor.children.map((node) => {
+//   const children = node.children.map((node) => node.text).join("");
+//   const tag = node.type;
+//   return `<${tag}>${children}</${tag}>`;
+// }, "").join("");
+
+function saveHTML(editor: PlateEditor) {
+  const html = editor.children
+    .map((node) => {
+      const children = node.children.map((node) => node.text).join("");
+      const tag = node.type;
+      const align = node.align;
+      return `<${tag} align="${align}">${children}</${tag}>`;
+    }, "")
+    .join("");
+  localStorage.setItem("HTMLofFile", html);
+  console.log("Html saved in local HTML");
 }
-
 
 export function FixedToolbarButtons() {
   const readOnly = useEditorReadOnly();
-
+  const editor = useEditorRef();
   return (
     <div className="w-full overflow-hidden">
       <div
@@ -72,7 +93,6 @@ export function FixedToolbarButtons() {
               >
                 <Icons.strikethrough />
               </MarkToolbarButton>
-              
             </ToolbarGroup>
 
             <ToolbarGroup>
@@ -99,7 +119,10 @@ export function FixedToolbarButtons() {
           <ModeDropdownMenu />
         </ToolbarGroup>
         <ToolbarGroup>
-          <ToolbarButton onClick={saveHTML} tooltip="Save file as HTML">
+          <ToolbarButton
+            onClick={() => saveHTML(editor)}
+            tooltip="Save file as HTML"
+          >
             <Icons.download />
           </ToolbarButton>
         </ToolbarGroup>
