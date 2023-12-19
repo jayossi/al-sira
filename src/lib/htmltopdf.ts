@@ -11,46 +11,18 @@ const FONT_SIZE_MAPPING = {
   h6: 10,
 };
 
+//This function uses window.print to print the html and then convert it to pdf using the browser's print dialog
 function transformHtmlToPdf(html: string) {
-  const doc = new jsPDF();
-
   const parser = new DOMParser();
   const parsedHtml = parser.parseFromString(html, "text/html");
-
-  const elements = parsedHtml.body.children;
-
-  for (let i = 0; i < elements.length; i++) {
-    const element = elements[i];
-
-    const tagName = element.tagName.toLowerCase();
-    const alignment = element.getAttribute("align");
-
-    // If the element is a heading, we need to change the font size
-    if (tagName in FONT_SIZE_MAPPING) {
-      doc.setFontSize(
-        FONT_SIZE_MAPPING[tagName as keyof typeof FONT_SIZE_MAPPING]
-      );
-    }
-
-    //This is an example of a centered text
-    //doc.text("This is centred text.", 105, 80, null, null, "center");
-
-    //   switch (alignment) {
-    //     case "center":
-    //       doc.text(
-    //         element.textContent!,
-    //         105,
-    //         doc.previous.finalY + 10,
-    //         { align: "center" }
-    //       );
-    //       break;
-    //     default:
-    //       doc.text(element.textContent!, 10, doc.previous.finalY + 10);
-    //       break;
-    //   }
-  }
-
-  doc.save("output.pdf");
+  const elements = parsedHtml.body;
+  const iframe = document.createElement("iframe");
+  iframe.style.display = "none";
+  document.body.appendChild(iframe);
+  iframe.contentDocument!.body.appendChild(elements);
+  iframe.contentWindow!.focus();
+  iframe.contentWindow!.print();
+  
 }
 
 const transformHtmlToPdfwithHTMLAsCanvas = (html: string) => {
