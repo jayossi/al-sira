@@ -11,7 +11,6 @@ const FONT_SIZE_MAPPING = {
   h6: 10,
 };
 
-//This function uses window.print to print the html and then convert it to pdf using the browser's print dialog
 function transformHtmlToPdf(html: string) {
   const parser = new DOMParser();
   const parsedHtml = parser.parseFromString(html, "text/html");
@@ -22,25 +21,24 @@ function transformHtmlToPdf(html: string) {
   iframe.contentDocument!.body.appendChild(elements);
   iframe.contentWindow!.focus();
   iframe.contentWindow!.print();
-  
 }
 
-const transformHtmlToPdfwithHTMLAsCanvas = (html: string) => {
-  var doc = new jsPDF();
-  const parser = new DOMParser();
-  const parsedHtml = parser.parseFromString(html, "text/html");
+// const transformHtmlToPdfwithHTMLAsCanvas = (html: string) => {
+//   var doc = new jsPDF();
+//   const parser = new DOMParser();
+//   const parsedHtml = parser.parseFromString(html, "text/html");
 
-  const elements = parsedHtml.body;
-  console.log("the input html is", elements);
-  html2pdf(elements, {
-    margin: 10,
-    filename: "myResume_ar.pdf",
-    jsPdf: {
-      orientation: "portrait",
-      unit: "mm",
-      format: "a4",
-    },
-  });
-};
+//   const elements = parsedHtml.body;
+//   console.log("the input html is", elements);
+//   html2pdf(elements, {
+//     margin: 10,
+//     filename: "myResume_ar.pdf",
+//     jsPdf: {
+//       orientation: "portrait",
+//       unit: "mm",
+//       format: "a4",
+//     },
+//   });
+// };
 
-export { transformHtmlToPdfwithHTMLAsCanvas , transformHtmlToPdf };
+export { transformHtmlToPdf };

@@ -30,31 +30,23 @@ import {
 import { elementToHtml, leafToHtml } from "@udecode/plate-serializer-html";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
-import {
-  transformHtmlToPdf,
-  transformHtmlToPdfwithHTMLAsCanvas,
-} from "@/lib/htmltopdf";
-// const html = editor.children.map((node) => {
-//   const children = node.children.map((node) => node.text).join("");
-//   const tag = node.type;
-//   return `<${tag}>${children}</${tag}>`;
-// }, "").join("");
+import { transformHtmlToPdf } from "@/lib/htmltopdf";
 
-import { DownloadDropdownMenu } from "@/components/plate-ui/download-dropdown-menu";
+// import { DownloadDropdownMenu } from "@/components/plate-ui/download-dropdown-menu";
 
-export function saveHTMLasCanvas(editor: PlateEditor) {
-  const html = editor.children
-    .map((node) => {
-      const children = node.children.map((node) => node.text).join("");
-      const tag = node.type;
-      const align = node.align;
-      return `<${tag} align="${align}">${children}</${tag}>`;
-    }, "")
-    .join("");
-  localStorage.setItem("HTMLofFile", html);
-  transformHtmlToPdfwithHTMLAsCanvas(html);
-  console.log("Html saved in local HTML");
-}
+// export function saveHTMLasCanvas(editor: PlateEditor) {
+//   const html = editor.children
+//     .map((node) => {
+//       const children = node.children.map((node) => node.text).join("");
+//       const tag = node.type;
+//       const align = node.align;
+//       return `<${tag} align="${align}">${children}</${tag}>`;
+//     }, "")
+//     .join("");
+//   localStorage.setItem("HTMLofFile", html);
+//   transformHtmlToPdfwithHTMLAsCanvas(html);
+//   console.log("Html saved in local HTML");
+// }
 
 export function saveHTMLasPDF(editor: PlateEditor) {
   const html = editor.children
@@ -131,10 +123,14 @@ export function FixedToolbarButtons() {
         <div className="grow" />
 
         <ToolbarGroup noSeparator>
-          <DownloadDropdownMenu />
+          <ToolbarButton
+            onClick={() => saveHTMLasPDF(editor)}
+            tooltip="Save file as HTML"
+          >
+            <Icons.download />
+          </ToolbarButton>
         </ToolbarGroup>
-
-        <ToolbarGroup >
+        <ToolbarGroup>
           <ModeDropdownMenu />
         </ToolbarGroup>
       </div>

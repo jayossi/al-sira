@@ -11,7 +11,6 @@ import {
 } from "./dropdown-menu";
 import { ToolbarButton } from "./toolbar";
 import {
-  saveHTMLasCanvas,
   saveHTMLasPDF,
 } from "@/components/plate-ui/fixed-toolbar-buttons";
 import { useEditorState } from "@udecode/plate-common";
@@ -38,7 +37,7 @@ export function DownloadDropdownMenu(props: DropdownMenuProps) {
     if (option === "pdf") {
       saveHTMLasPDF(editor); // Call the first function from htmltoPDF.ts
     } else if (option === "image") {
-      saveHTMLasCanvas(editor); // Call the second function from htmltoPDF.ts
+      // saveHTMLasCanvas(editor); // Call the second function from htmltoPDF.ts
     }
   };
 
