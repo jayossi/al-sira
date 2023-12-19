@@ -1,10 +1,7 @@
-import React from 'react';
 import {
-  MARK_BOLD,
-  MARK_CODE,
-  MARK_ITALIC,
+  MARK_BOLD, MARK_ITALIC,
   MARK_STRIKETHROUGH,
-  MARK_UNDERLINE,
+  MARK_UNDERLINE
 } from '@udecode/plate-basic-marks';
 import { useEditorReadOnly } from '@udecode/plate-common';
 

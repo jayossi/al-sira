@@ -1,10 +1,7 @@
-import React from "react";
 import {
-  MARK_BOLD,
-  MARK_CODE,
-  MARK_ITALIC,
+  MARK_BOLD, MARK_ITALIC,
   MARK_STRIKETHROUGH,
-  MARK_UNDERLINE,
+  MARK_UNDERLINE
 } from "@udecode/plate-basic-marks";
 import { MARK_COLOR, MARK_BG_COLOR } from "@udecode/plate-font";
 import {
@@ -27,9 +24,6 @@ import {
   useListToolbarButton,
   useListToolbarButtonState,
 } from "@udecode/plate-list";
-import { elementToHtml, leafToHtml } from "@udecode/plate-serializer-html";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { DndProvider } from "react-dnd";
 import { transformHtmlToPdf } from "@/lib/htmltopdf";
 
 // import { DownloadDropdownMenu } from "@/components/plate-ui/download-dropdown-menu";
