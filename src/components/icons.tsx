@@ -60,6 +60,7 @@ import {
   WrapText,
   X,
   Download,
+  FileText,
 } from 'lucide-react';
 
 import type { LucideIcon } from 'lucide-react';
@@ -221,6 +222,7 @@ export const Icons = {
   unlink: Link2Off,
   viewing: Eye,
   download: Download,
+  filetext: FileText,
   // www
   gitHub: (props: LucideProps) => (
     <svg viewBox="0 0 438.549 438.549" {...props}>

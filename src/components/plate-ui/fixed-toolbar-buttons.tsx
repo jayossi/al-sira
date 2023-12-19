@@ -40,7 +40,9 @@ import {
 //   return `<${tag}>${children}</${tag}>`;
 // }, "").join("");
 
-function saveHTML(editor: PlateEditor) {
+import { DownloadDropdownMenu } from "@/components/plate-ui/download-dropdown-menu";
+
+export function saveHTMLasCanvas(editor: PlateEditor) {
   const html = editor.children
     .map((node) => {
       const children = node.children.map((node) => node.text).join("");
@@ -51,6 +53,20 @@ function saveHTML(editor: PlateEditor) {
     .join("");
   localStorage.setItem("HTMLofFile", html);
   transformHtmlToPdfwithHTMLAsCanvas(html);
+  console.log("Html saved in local HTML");
+}
+
+export function saveHTMLasPDF(editor: PlateEditor) {
+  const html = editor.children
+    .map((node) => {
+      const children = node.children.map((node) => node.text).join("");
+      const tag = node.type;
+      const align = node.align;
+      return `<${tag} align="${align}">${children}</${tag}>`;
+    }, "")
+    .join("");
+  localStorage.setItem("HTMLofFile", html);
+  transformHtmlToPdf(html);
   console.log("Html saved in local HTML");
 }
 
@@ -115,15 +131,11 @@ export function FixedToolbarButtons() {
         <div className="grow" />
 
         <ToolbarGroup noSeparator>
-          <ModeDropdownMenu />
+          <DownloadDropdownMenu />
         </ToolbarGroup>
-        <ToolbarGroup>
-          <ToolbarButton
-            onClick={() => saveHTML(editor)}
-            tooltip="Save file as HTML"
-          >
-            <Icons.download />
-          </ToolbarButton>
+
+        <ToolbarGroup >
+          <ModeDropdownMenu />
         </ToolbarGroup>
       </div>
     </div>
