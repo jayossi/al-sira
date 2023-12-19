@@ -179,16 +179,6 @@ const plugins = createPlugins(
             hotkey: "mod+shift+enter",
             before: true,
           },
-          {
-            hotkey: "enter",
-            query: {
-              start: true,
-              end: true,
-              // allow: KEYS_HEADING,
-            },
-            relative: true,
-            level: 1,
-          },
         ],
       },
     }),
@@ -200,29 +190,11 @@ const plugins = createPlugins(
         ],
       },
     }),
-    createSelectOnBackspacePlugin({
-      options: {
-        query: {
-          allow: [
-            // ELEMENT_IMAGE, ELEMENT_HR
-          ],
-        },
-      },
-    }),
+
     createDeletePlugin(),
     createSoftBreakPlugin({
       options: {
-        rules: [
-          { hotkey: "shift+enter" },
-          {
-            hotkey: "enter",
-            query: {
-              allow: [
-                // ELEMENT_CODE_BLOCK, ELEMENT_BLOCKQUOTE, ELEMENT_TD
-              ],
-            },
-          },
-        ],
+        rules: [{ hotkey: "shift+enter" }],
       },
     }),
     createTabbablePlugin(),
@@ -269,7 +241,6 @@ function PlateEditor() {
 }
 
 export default PlateEditor;
-
 
 export const initialResumeValue = [
   {
