@@ -6,12 +6,7 @@ import {
   MARK_STRIKETHROUGH,
   MARK_UNDERLINE,
 } from "@udecode/plate-basic-marks";
-import {
-  MARK_COLOR,
-  MARK_BG_COLOR,
-  MARK_FONT_SIZE,
-  MARK_FONT_FAMILY,
-} from "@udecode/plate-font";
+import { MARK_COLOR, MARK_BG_COLOR } from "@udecode/plate-font";
 import {
   PlateEditor,
   useEditorReadOnly,
@@ -35,7 +30,10 @@ import {
 import { elementToHtml, leafToHtml } from "@udecode/plate-serializer-html";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
-
+import {
+  transformHtmlToPdf,
+  transformHtmlToPdfwithHTMLAsCanvas,
+} from "@/lib/htmltopdf";
 // const html = editor.children.map((node) => {
 //   const children = node.children.map((node) => node.text).join("");
 //   const tag = node.type;
@@ -52,6 +50,7 @@ function saveHTML(editor: PlateEditor) {
     }, "")
     .join("");
   localStorage.setItem("HTMLofFile", html);
+  transformHtmlToPdfwithHTMLAsCanvas(html);
   console.log("Html saved in local HTML");
 }
 
