@@ -1,4 +1,5 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## AI-powered resume optimization platform! 
+With cutting-edge technology, we empower users to craft professional Arabic resumes effortlessly. Our platform offers advanced features such as AI-driven resume generation, leveraging state-of-the-art algorithms to produce precise and contextually rich bullet points. Additionally, users can enhance their existing resumes by uploading them and receiving significant improvements through our AI capabilities. Behind the scenes, we employ robust technologies like TypeScript ORM for PostgreSQL, AWS S3 for secure file storage, and utilize Retrieval Augmented Generation with PineconeDB for efficient data handling. Join us and revolutionize your resume-building experience!
 
 ## Getting Started
 
@@ -8,11 +9,7 @@ First, run the development server:
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
@@ -20,11 +17,6 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-To run the NEXTJS storybook run:
-
-```bash
-npm run storybook
-```
 
 Open [http://localhost:6006](http://localhost:6006) with your browser to see the result.
 
